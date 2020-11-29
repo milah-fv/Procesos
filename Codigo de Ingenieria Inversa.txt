@@ -1,0 +1,334 @@
+
+CREATE TABLE users (
+                id INT AUTO_INCREMENT NOT NULL,
+                name VARCHAR(150) NOT NULL,
+                last_name VARCHAR(150),
+                email VARCHAR(150) NOT NULL,
+                password VARCHAR(150) NOT NULL,
+                avatar VARCHAR(150),
+                actived TINYINT DEFAULT 1 NOT NULL,
+                celphone VARCHAR(20),
+                function VARCHAR(150),
+                created_at DATETIME,
+                updated_at DATETIME,
+                PRIMARY KEY (id)
+);
+
+
+CREATE TABLE states (
+                id INT AUTO_INCREMENT NOT NULL,
+                name VARCHAR(191) NOT NULL,
+                created_at DATETIME,
+                updated_at DATETIME,
+                PRIMARY KEY (id)
+);
+
+
+CREATE INDEX id USING BTREE
+ ON states
+ ( id ASC );
+
+CREATE TABLE sizes (
+                id INT AUTO_INCREMENT NOT NULL,
+                name VARCHAR(150) NOT NULL,
+                enable TINYINT DEFAULT 1 NOT NULL,
+                created_at DATETIME,
+                updated_at DATETIME,
+                PRIMARY KEY (id)
+);
+
+
+CREATE INDEX id USING BTREE
+ ON sizes
+ ( id ASC );
+
+CREATE TABLE product_images (
+                id INT AUTO_INCREMENT NOT NULL,
+                image VARCHAR(150),
+                product_id INT NOT NULL,
+                created_at DATETIME,
+                updated_at DATETIME,
+                PRIMARY KEY (id)
+);
+
+
+CREATE INDEX id USING BTREE
+ ON product_images
+ ( id ASC );
+
+CREATE INDEX product_id USING BTREE
+ ON product_images
+ ( product_id ASC );
+
+CREATE TABLE payments (
+                id INT AUTO_INCREMENT NOT NULL,
+                order_id INT NOT NULL,
+                amount DECIMAL(8,2) NOT NULL,
+                reference_code VARCHAR(191),
+                created_at DATETIME,
+                updated_at DATETIME,
+                PRIMARY KEY (id)
+);
+
+
+CREATE INDEX id USING BTREE
+ ON payments
+ ( id ASC );
+
+CREATE INDEX order_id USING BTREE
+ ON payments
+ ( order_id ASC );
+
+CREATE TABLE orders (
+                id INT AUTO_INCREMENT NOT NULL,
+                customer_id INT NOT NULL,
+                name VARCHAR(150),
+                last_name VARCHAR(150),
+                dni VARCHAR(8),
+                state_id INT NOT NULL,
+                created_at DATETIME,
+                updated_at DATETIME,
+                PRIMARY KEY (id)
+);
+
+
+CREATE INDEX id USING BTREE
+ ON orders
+ ( id ASC );
+
+CREATE INDEX customer_id USING BTREE
+ ON orders
+ ( customer_id ASC );
+
+CREATE INDEX name USING BTREE
+ ON orders
+ ( name ASC );
+
+CREATE INDEX last_name USING BTREE
+ ON orders
+ ( last_name ASC );
+
+CREATE INDEX dni USING BTREE
+ ON orders
+ ( dni ASC );
+
+CREATE INDEX state_id USING BTREE
+ ON orders
+ ( state_id ASC );
+
+CREATE TABLE customers (
+                id INT AUTO_INCREMENT NOT NULL,
+                name VARCHAR(150) NOT NULL,
+                last_name VARCHAR(150) NOT NULL,
+                email VARCHAR(150) NOT NULL,
+                password VARCHAR(150) NOT NULL,
+                actived TINYINT DEFAULT 1 NOT NULL,
+                verified TINYINT DEFAULT 0 NOT NULL,
+                dni VARCHAR(8),
+                celphone VARCHAR(20),
+                phone VARCHAR(20),
+                ruc VARCHAR(11),
+                razon_social VARCHAR(150),
+                remember_token VARCHAR(100),
+                created_at DATETIME,
+                updated_at DATETIME,
+                PRIMARY KEY (id)
+);
+
+
+CREATE INDEX id USING BTREE
+ ON customers
+ ( id ASC );
+
+CREATE TABLE customer_verify (
+                id INT NOT NULL,
+                customer_id INT NOT NULL,
+                token VARCHAR(150) NOT NULL,
+                created_at DATETIME,
+                updated_at DATETIME,
+                PRIMARY KEY (id)
+);
+
+
+CREATE INDEX customer_id USING BTREE
+ ON customer_verify
+ ( customer_id ASC );
+
+CREATE TABLE colors (
+                id INT AUTO_INCREMENT NOT NULL,
+                color VARCHAR(150) NOT NULL,
+                enable TINYINT DEFAULT 1,
+                created_at DATETIME,
+                updated_at DATETIME,
+                PRIMARY KEY (id)
+);
+
+
+CREATE INDEX id USING BTREE
+ ON colors
+ ( id ASC );
+
+CREATE TABLE categories (
+                id INT AUTO_INCREMENT NOT NULL,
+                name VARCHAR(150) NOT NULL,
+                slug VARCHAR(150),
+                enable TINYINT DEFAULT 1,
+                created_at DATETIME,
+                updated_at DATETIME,
+                PRIMARY KEY (id)
+);
+
+
+CREATE INDEX id USING BTREE
+ ON categories
+ ( id ASC );
+
+CREATE TABLE products (
+                id INT NOT NULL,
+                name VARCHAR(150) NOT NULL,
+                price DECIMAL(8,2) NOT NULL,
+                old_price DECIMAL(8,2),
+                cover_image VARCHAR(150) NOT NULL,
+                stock INT,
+                description TEXT,
+                features VARCHAR(500),
+                state VARCHAR(150),
+                weight SMALLINT,
+                enable TINYINT DEFAULT 1 NOT NULL,
+                category_id INT NOT NULL,
+                color_id INT NOT NULL,
+                created_at DATETIME,
+                updated_at DATETIME,
+                PRIMARY KEY (id)
+);
+
+
+CREATE INDEX id USING BTREE
+ ON products
+ ( id ASC );
+
+CREATE INDEX category_id USING BTREE
+ ON products
+ ( category_id ASC );
+
+CREATE INDEX color_id USING BTREE
+ ON products
+ ( color_id ASC );
+
+CREATE TABLE product_size (
+                id INT NOT NULL,
+                product_id INT NOT NULL,
+                size_id INT NOT NULL,
+                quantity INT,
+                created_at DATETIME,
+                updated_at DATETIME,
+                PRIMARY KEY (id)
+);
+
+
+CREATE INDEX id USING BTREE
+ ON product_size
+ ( id ASC );
+
+CREATE INDEX product_id USING BTREE
+ ON product_size
+ ( product_id ASC );
+
+CREATE INDEX size_id USING BTREE
+ ON product_size
+ ( size_id ASC );
+
+CREATE TABLE order_detail (
+                id INT AUTO_INCREMENT NOT NULL,
+                product_id INT NOT NULL,
+                order_id INT NOT NULL,
+                quantity INT NOT NULL,
+                size VARCHAR(100),
+                created_at DATETIME,
+                updated_at DATETIME,
+                PRIMARY KEY (id)
+);
+
+
+CREATE INDEX id USING BTREE
+ ON order_detail
+ ( id ASC );
+
+CREATE INDEX product_id USING BTREE
+ ON order_detail
+ ( product_id ASC );
+
+CREATE INDEX order_id USING BTREE
+ ON order_detail
+ ( order_id ASC );
+
+CREATE TABLE boucher (
+                id INT AUTO_INCREMENT NOT NULL,
+                order_id INT NOT NULL,
+                customer_id INT NOT NULL,
+                image VARCHAR(150) NOT NULL,
+                created_at DATETIME,
+                updated_at DATETIME,
+                PRIMARY KEY (id)
+);
+
+
+CREATE INDEX id USING BTREE
+ ON boucher
+ ( id ASC );
+
+CREATE INDEX order_id USING BTREE
+ ON boucher
+ ( order_id ASC );
+
+CREATE INDEX customer_id USING BTREE
+ ON boucher
+ ( customer_id ASC );
+
+ALTER TABLE orders ADD CONSTRAINT orders_ibfk_2
+FOREIGN KEY (state_id)
+REFERENCES states (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE product_size ADD CONSTRAINT product_size_ibfk_2
+FOREIGN KEY (size_id)
+REFERENCES sizes (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE boucher ADD CONSTRAINT boucher_ibfk_1
+FOREIGN KEY (order_id)
+REFERENCES orders (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE boucher ADD CONSTRAINT boucher_ibfk_2
+FOREIGN KEY (customer_id)
+REFERENCES customers (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE products ADD CONSTRAINT products_ibfk_2
+FOREIGN KEY (color_id)
+REFERENCES colors (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE products ADD CONSTRAINT products_ibfk_1
+FOREIGN KEY (category_id)
+REFERENCES categories (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE order_detail ADD CONSTRAINT order_detail_ibfk_2
+FOREIGN KEY (product_id)
+REFERENCES products (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE product_size ADD CONSTRAINT products_product_size_fk
+FOREIGN KEY (id)
+REFERENCES products (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
